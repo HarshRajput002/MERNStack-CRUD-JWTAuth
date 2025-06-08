@@ -1,7 +1,14 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 interface props{
   RegiButton:()=>void
 }
 const LoginForm = ({ RegiButton}:props) => {
+  const navigate=useNavigate()
+  const FormHandle=(e:React.FormEvent)=>{
+    e.preventDefault();
+    navigate("/Home");
+  }
   return (
     <div
   className="d-flex justify-content-center align-items-center min-vh-100"
@@ -9,11 +16,12 @@ const LoginForm = ({ RegiButton}:props) => {
     backgroundImage: `url("Try2.webp")`,
     backgroundSize: "cover",
     backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
+  
     padding: "1rem",
   }}
 >
   <form
+    onSubmit={FormHandle}
     className="bg-light p-5 rounded-4 shadow-lg"
     style={{
       width: "100%",

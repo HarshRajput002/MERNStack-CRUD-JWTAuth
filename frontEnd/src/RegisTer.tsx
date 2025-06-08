@@ -1,11 +1,17 @@
 // RegisterModal.jsx
 
-import React from "react";
+import React, { useState } from "react";
+import axios from 'axios';
  interface LoginBtn{
      onClose:()=>void
   }
 
 const RegisterModal = ({ onClose }:LoginBtn) => {
+  const [formData,setFormData]=useState({
+    username:"",
+    password:"",
+    email:""
+  })
  
   const backdropStyle:React.CSSProperties= {
   position: "fixed",
@@ -26,7 +32,25 @@ const modalStyle:React.CSSProperties = {
   maxWidth: "500px",
   width: "100%",
 };
+const onChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
+ setFormData({
+  ...formData,
+  [e.target.id]:e.target.value,
+ });
+}
 
+const onHandle=async (e:React.FormEvent)=>{
+  e.preventDefault();
+  try{
+  const res= await axios.post(" http://localhost:5173/api/register",formData)
+  console.log(res.data)
+  }
+  catch(error){
+    console.log(error);
+  }
+  
+  
+}
 
 
 return (
@@ -37,18 +61,18 @@ return (
           <h5 className="m-0">Register</h5>
           <button className="btn-close" onClick={onClose}></button>
         </div>
-        <form>
+        <form onSubmit={onHandle} >
           <div className="mb-3">
             <label htmlFor="username" className="form-label">Username</label>
-            <input type="text" id="username" className="form-control" />
+            <input type="text" id="username" className="form-control" value={formData.username}  onChange={onChange} />
           </div>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">Email</label>
-            <input type="email" id="email" className="form-control" />
+            <input type="email" id="email" className="form-control" value={formData.email} onChange={onChange} />
           </div>
           <div className="mb-3">
             <label htmlFor="password" className="form-label">Password</label>
-            <input type="password" id="password" className="form-control" />
+            <input type="password" id="password" className="form-control" value={formData.password} onChange={onChange} />
           </div>
           <button type="submit" className="btn btn-primary w-100">Register</button>
         </form>
