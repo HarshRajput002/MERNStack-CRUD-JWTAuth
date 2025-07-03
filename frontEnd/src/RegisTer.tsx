@@ -42,7 +42,8 @@ const onChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
 const onHandle=async (e:React.FormEvent)=>{
   e.preventDefault();
   try{
-  const res= await axios.post(" http://localhost:5173/api/register",formData)
+  const res = await axios.post("http://localhost:5000/api/register", formData);
+  onClose()
   console.log(res.data)
   }
   catch(error){
