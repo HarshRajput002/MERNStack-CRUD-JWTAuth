@@ -12,8 +12,6 @@ app.use(cors());
 
 
 mongoose.connect('mongodb://localhost:27017/tasks', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
 }).then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 
@@ -21,7 +19,9 @@ mongoose.connect('mongodb://localhost:27017/tasks', {
 
 const authenticate = (req, res, next) => {
   const token = req.headers.authorization?.replace("Bearer ", "");
-  if (!token) return res.status(401).json({ error: "No token provided" });
+  if (!token){
+    return res.status(401).json({ error: "No token provided" });
+  } 
 
   try {
     const decoded = jwt.verify(token, "jwt_Token_Key");
@@ -126,6 +126,19 @@ app.delete("/api/crud/:id", authenticate, async (req, res) => {
   } catch (error) {
     console.error("Delete Error:", error);
     res.status(500).json({ error: "Task deletion failed" });
+  }
+});
+
+app.get("/api/profile", authenticate, async (req, res) => {
+  try {
+    const user = await ExpUser.findById(req.user.id).select("username email");
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Profile error:", error);
+    res.status(500).json({ error: "Failed to load profile" });
   }
 });
 

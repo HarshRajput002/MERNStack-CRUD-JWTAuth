@@ -8,6 +8,7 @@ import RegisterModal from "./RegisTer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./MainPage";
 import ProtectedRoute from "./ProtectedRoute";
+import Profile from "./profile";
 function App() {
   const [Reg, SetReg] = useState(false);
 
@@ -28,6 +29,14 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          ></Route>
         </Routes>
       </>
     </Router>

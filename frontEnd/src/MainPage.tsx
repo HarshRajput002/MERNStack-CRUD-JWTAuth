@@ -1,7 +1,7 @@
 import React, { FormEvent, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const MainPage = () => {
@@ -124,16 +124,10 @@ const MainPage = () => {
         <div className="offcanvas-body">
           <ul className="nav flex-column">
             <li className="nav-item">
-              <a className="nav-link" href="#">Dashboard</a>
+              <Link className="nav-link" to="/">Dashboard</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Add Task</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">My Tasks</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Profile</a>
+              <Link className="nav-link" to="/profile">Profile</Link>
             </li>
             <li className="nav-item">
               <button
@@ -144,26 +138,24 @@ const MainPage = () => {
           </ul>
         </div>
       </div>
-
-      {/* Main Layout */}
+   
+    
       <div className="container-fluid">
         <div className="row">
-          {/* Sidebar */}
+        
           <div className="col-md-3 d-none d-md-block bg-light min-vh-100 p-3">
             <h4 className="fw-bold">TaskScheduler</h4>
             <hr />
             <ul className="nav flex-column">
-              <li className="nav-item"><a className="nav-link active" href="#">Dashboard</a></li>
-              <li className="nav-item"><a className="nav-link" href="#">Add Task</a></li>
-              <li className="nav-item"><a className="nav-link" href="#">My Tasks</a></li>
-              <li className="nav-item"><a className="nav-link" href="#">Profile</a></li>
+              <li className="nav-item"> <Link className="nav-link active" to="/">Dashboard</Link></li>
+              <li className="nav-item"><Link className="nav-link" to="/profile">Profile</Link></li>
               <li className="nav-item">
                 <button className="btn btn-link nav-link text-start" onClick={handleLogout}>Logout</button>
               </li>
             </ul>
           </div>
 
-          {/* Main Content */}
+       
           <div className="col-md-9 d-flex flex-column gap-4 p-3">
             <div className="card p-3 shadow-sm">
               <h5 className="fw-bold">{isEditing ? "Edit Task" : "Add New Task"}</h5>
